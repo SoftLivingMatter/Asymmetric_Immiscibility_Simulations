@@ -68,7 +68,7 @@ production_dt=0.01 # Time step for production run in picoseconds
 production_steps=100000000 # Total number of steps
 production_T=Temp # Temperature for production run in Kelvin
 
-seqfile = 'sv28.dat'
+seqfile = 'ke7.dat'
 chain_id, chain_mass, chain_charge,aakeys,aaparams = chain_parse(seqfile)
 ##Create the snapshot ##
 bond_length=0.38
@@ -76,10 +76,9 @@ chain_length=len(chain_id)
 box_length=bond_length*chain_length+10
 
 #################################################################################################
-# ### Minimized slab formed and saved in minimize.gsd
-#---------------------------------------------------------------------------------------------
-# ## 4.0. Run a production slab simulation using minimize.gsd from previous step
+# Run a production NPAT simulation using equilibrated trajectory from prior NVT simulation
 ################################################################################################
+
 hoomd.context.initialize("--notice-level=2")
 sim = hoomd.context.SimulationContext()
 system = hoomd.init.read_gsd('restart_tmp1_%3i.gsd'%(Temp),frame=-1)

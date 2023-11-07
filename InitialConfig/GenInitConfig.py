@@ -16,7 +16,7 @@ import itertools as it
 # In[2]:
 
 
-seqname = 'sv1'
+seqname = 'ke1'
 Narm = 3
 
 
@@ -87,15 +87,15 @@ resize_T=Temp # Temperature for production run in Kelvin
 seqfile1 = seqname + '.dat'
 chain_id1, chain_mass1, chain_charge1,aakeys,aaparams = chain_parse(seqfile1,Narm)
 
-seqfile2 = 'sv28.dat'
+seqfile2 = 'ke7.dat'
 chain_id2, chain_mass2, chain_charge2,aakeys,aaparams = chain_parse(seqfile2,1)
 
 
 # In[5]:
 
 
-## Reading initial coordinates of folded sv1 star polymer generated from preliminary simulations##
-f = gsd.hoomd.open(name='start_sv1_3arm.gsd', mode='rb')
+## Reading initial coordinates of folded ke1 star polymer generated from preliminary simulations##
+f = gsd.hoomd.open(name='start_ke1_3arm.gsd', mode='rb')
 s1 = f[0]
 pos = s1.particles.position
 Nparticles_old = s1.particles.N

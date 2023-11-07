@@ -16,7 +16,7 @@ args = parser.parse_args()
 Temp = float(args.T)
 nstar = 147
 Narm = 3
-Nchain2 = 576
+Nchain2 = 441
 
 def get_param_dict():
     aaparams = {}
@@ -72,10 +72,10 @@ resize_dt=0.01 # Time step for production run in picoseconds
 resize_steps=500000 # Total number of steps
 resize_T=Temp # Temperature for production run in Kelvin
 
-seqfile1 = 'sv1.dat'
+seqfile1 = 'ke1.dat'
 chain_id1, chain_mass1, chain_charge1,aakeys,aaparams = chain_parse(seqfile1)
 
-seqfile2 = 'sv28.dat'
+seqfile2 = 'ke7.dat'
 chain_id2, chain_mass2, chain_charge2,aakeys,aaparams = chain_parse(seqfile2)
 
 bond_length=0.38
@@ -83,13 +83,13 @@ chain_length1=len(chain_id1)
 chain_length2=len(chain_id2)
 
 # #################################################################################################
-# # start_sv1.gsd contains both sv1x3 and sv28 in a cubic box. This simulation compresses the box
+# # start_ke1.gsd contains both ke1x3 and ke28 in a cubic box. This simulation compresses the box
 # # and elongates it to perform a direct coexistence simulation for equilibration of the system.
 # ################################################################################################
 
 hoomd.context.initialize("--notice-level=2")
 sim = hoomd.context.SimulationContext()
-system = hoomd.init.read_gsd('start_sv1.gsd')
+system = hoomd.init.read_gsd('start_ke1.gsd')
 
 boxsize = 20 # Size of the compressed simulation box
 

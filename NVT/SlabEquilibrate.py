@@ -64,7 +64,7 @@ equib_dt=0.01 # Time step for production run in picoseconds
 equib_steps=200000000 # Total number of steps
 equib_T=Temp # Temperature for production run in Kelvin
 
-seqfile1 = 'sv1.dat'
+seqfile1 = 'ke1.dat'
 chain_id, chain_mass, chain_charge,aakeys,aaparams = chain_parse(seqfile1)
 
 
