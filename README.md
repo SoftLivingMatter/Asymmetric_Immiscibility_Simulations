@@ -7,7 +7,7 @@ This is a repository of Python scripts associated with the manuscript "Asymmetri
 
 ## Example Usage
 
-1. In folder InitialConfig, the script '''GenInitConfig.py''' creates an initial configuration by initializing a system of 147 KE1x3 star polymers and 441 KE7 polymers in a cubic box, taking as input a pre-equilibrated configuration of a single KE1x3 polymer in start_ke1_3arm.gsd. An initial configuration file named start_ke1.gsd is created. 
+1. In folder InitialConfig, the script ``` GenInitConfig.py ``` creates an initial configuration by initializing a system of 147 KE1x3 star polymers and 441 KE7 polymers in a cubic box, taking as input a pre-equilibrated configuration of a single KE1x3 polymer in start_ke1_3arm.gsd. An initial configuration file named start_ke1.gsd is created. 
 2. The start_ke1.gsd is then utilized to compress the cubic 
 
 ## Acknowledgments
