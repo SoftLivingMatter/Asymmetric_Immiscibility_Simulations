@@ -83,8 +83,8 @@ chain_length1=len(chain_id1)
 chain_length2=len(chain_id2)
 
 # #################################################################################################
-# # start_ke1.gsd contains both ke1x3 and ke28 in a cubic box. This simulation compresses the box
-# # and elongates it to perform a direct coexistence simulation for equilibration of the system.
+# # start_ke1.gsd contains both ke1x3 and ke7 in a cubic box. This simulation compresses the box
+# # and elongates it to set up for a direct coexistence simulation for equilibration of the system.
 # ################################################################################################
 
 hoomd.context.initialize("--notice-level=2")
