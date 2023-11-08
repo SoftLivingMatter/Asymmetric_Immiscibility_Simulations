@@ -6,7 +6,7 @@ from hoomd import azplugins
 import argparse
 
 
-parser = argparse.ArgumentParser(description='Performs a test NVT run at correct temerature')
+parser = argparse.ArgumentParser(description='Performs a equilibration NVT run at input temerature')
 parser.add_argument('-T',dest='T',action='store',required=True,help='Temp')
 args = parser.parse_args()
 Temp = float(args.T)
