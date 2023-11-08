@@ -93,7 +93,7 @@ s1 = f[0]
 pos = s1.particles.position
 Nparticles_old = s1.particles.N
 config = s1.configuration.box[0]
-Nstar = 200
+Nstar = 147
 Nstarres = len(pos)
 print(len(pos))
 
@@ -129,7 +129,7 @@ N1 = len(arrtypeids)
 
 ## No of sv28 particles ##
 chain_length2 = len(chain_id2)
-Nchain2 = 460
+Nchain2 = 441
 Nparticles2 = chain_length2*Nchain2
 bond_length = 0.38
 
