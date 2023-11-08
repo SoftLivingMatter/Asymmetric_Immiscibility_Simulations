@@ -77,13 +77,6 @@ def chain_parse(seqfile,valence):
 
 # In[4]:
 
-
-#Production run parameters
-Temp = 250
-resize_dt=0.01 # Time step for production run in picoseconds
-resize_steps=500000 # Total number of steps
-resize_T=Temp # Temperature for production run in Kelvin
-
 seqfile1 = seqname + '.dat'
 chain_id1, chain_mass1, chain_charge1,aakeys,aaparams = chain_parse(seqfile1,Narm)
 
