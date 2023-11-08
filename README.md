@@ -3,11 +3,12 @@
 ![GitPic](https://github.com/SoftLivingMatter/Asymmetric_Immiscibility_Simulations/assets/68254269/9e1da8c1-3fbf-42c7-a747-d9f13ccc619d)
 
 
-This is a repository of Python scripts by Ushnish Rana associated with the manuscript "Asymmetric oligomerization state and sequence patterning can tune multiphase condensate miscibility" published on Bioxriv on March 12, 2023, and all subsequent versions of this manuscript. It contains simulation scripts for MD software [HOOMD-Blue 2.9.7](https://hoomd-blue.readthedocs.io/en/v2.9.7/) with the plugin [azplugins](https://github.com/mphowardlab/azplugins/) to perform direct coexistence NPAT simulations for estimating the relative miscibility of model disordered proteins with oligomerization effects. 
+This is a repository of Python scripts associated with the manuscript "Asymmetric oligomerization state and sequence patterning can tune multiphase condensate miscibility" published on Bioxriv on March 12, 2023, and all subsequent versions of this manuscript. It contains simulation scripts for MD software [HOOMD-Blue 2.9.7](https://hoomd-blue.readthedocs.io/en/v2.9.7/) with the plugin [azplugins](https://github.com/mphowardlab/azplugins/) to perform direct coexistence NPAT simulations for estimating the relative miscibility of model disordered proteins with oligomerization effects. 
 
 ## Example Usage
 
-
+1. In folder InitialConfig, the script GenInitConfig.py creates an initial configuration by initializing a system of 147 KE1x3 star polymers and 441 KE7 polymers in a cubic box, taking as input a pre-equilibrated configuration of a single KE1x3 polymer in start_ke1_3arm.gsd. An initial configuration file named start_ke1.gsd is created. 
+2. The start_ke1.gsd is then utilized to compress the cubic 
 
 ## Acknowledgments
 
