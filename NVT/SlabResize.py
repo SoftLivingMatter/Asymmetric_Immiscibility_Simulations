@@ -8,7 +8,7 @@ import itertools as it
 import argparse
 import hoomd
 from hoomd import azplugins
-parser = argparse.ArgumentParser(description='Performs a test NVT run at correct density')
+parser = argparse.ArgumentParser(description='Performs a resizing run at correct density and temperature')
 parser.add_argument('-T',dest='T',action='store',required=True,help='Temp')
 args = parser.parse_args()
 
