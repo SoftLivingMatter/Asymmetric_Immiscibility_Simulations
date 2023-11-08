@@ -14,5 +14,5 @@ This is a repository of Python scripts associated with the manuscript "Asymmetri
    
 ## Acknowledgments
 
-Code for setting up HPS model NVT simulations was adapted from [slab_builder](https://github.com/Roshan-M-Regy/slab_builder/tree/79283702a304556b46e53eeaede0f6a706299a86).
+Code for setting up the HPS interaction model and NVT simulations was adapted from [slab_builder](https://github.com/Roshan-M-Regy/slab_builder/tree/79283702a304556b46e53eeaede0f6a706299a86).
 Regy, R. M.; Zheng, W.; Mittal, J. Theory of biological phase separation, Liquid-Liquid Phase Coexistence and Membraneless Organelles. in Liquid-Liquid Phase Coexistence and Membraneless Organelles (ed. Keating, C. D.) (2020).
