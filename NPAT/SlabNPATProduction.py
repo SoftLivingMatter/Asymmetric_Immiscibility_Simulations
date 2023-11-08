@@ -7,7 +7,7 @@ from hoomd import azplugins
 import argparse
 
 
-parser = argparse.ArgumentParser(description='Performs a test NVT run at correct temerature')
+parser = argparse.ArgumentParser(description='Performs a production NPAT run at input pressure')
 parser.add_argument('-P',dest='P',action='store',required=True,help='Pressure')
 args = parser.parse_args()
 Temp =250
