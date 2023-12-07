@@ -1,5 +1,16 @@
 # Asymmetric_Immiscibility_Simulations
 
+[![Actions Status][actions-badge]][actions-link]
+[![Documentation Status][rtd-badge]][rtd-link]
+
+[![PyPI version][pypi-version]][pypi-link]
+[![Conda-Forge][conda-badge]][conda-link]
+[![PyPI platforms][pypi-platforms]][pypi-link]
+
+[![GitHub Discussion][github-discussions-badge]][github-discussions-link]
+
+<!-- SPHINX-START -->
+
 ![GitPic](https://github.com/SoftLivingMatter/Asymmetric_Immiscibility_Simulations/assets/68254269/9e1da8c1-3fbf-42c7-a747-d9f13ccc619d)
 
 
@@ -41,3 +52,18 @@ from [slab_builder](https://github.com/Roshan-M-Regy/slab_builder/tree/79283702a
 Regy, R. M.; Zheng, W.; Mittal, J. Theory of biological phase separation,
 Liquid-Liquid Phase Coexistence and Membraneless Organelles. in Liquid-Liquid
 Phase Coexistence and Membraneless Organelles (ed. Keating, C. D.) (2020).
+
+<!-- prettier-ignore-start -->
+[actions-badge]:            https://github.com/SoftLivingMatter/asymmetric-immiscibility-simulations/workflows/CI/badge.svg
+[actions-link]:             https://github.com/SoftLivingMatter/asymmetric-immiscibility-simulations/actions
+[conda-badge]:              https://img.shields.io/conda/vn/conda-forge/asymmetric-immiscibility-simulations
+[conda-link]:               https://github.com/conda-forge/asymmetric-immiscibility-simulations-feedstock
+[github-discussions-badge]: https://img.shields.io/static/v1?label=Discussions&message=Ask&color=blue&logo=github
+[github-discussions-link]:  https://github.com/SoftLivingMatter/asymmetric-immiscibility-simulations/discussions
+[pypi-link]:                https://pypi.org/project/asymmetric-immiscibility-simulations/
+[pypi-platforms]:           https://img.shields.io/pypi/pyversions/asymmetric-immiscibility-simulations
+[pypi-version]:             https://img.shields.io/pypi/v/asymmetric-immiscibility-simulations
+[rtd-badge]:                https://readthedocs.org/projects/asymmetric-immiscibility-simulations/badge/?version=latest
+[rtd-link]:                 https://asymmetric-immiscibility-simulations.readthedocs.io/en/latest/?badge=latest
+
+<!-- prettier-ignore-end -->
