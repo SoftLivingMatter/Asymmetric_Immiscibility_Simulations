@@ -1,15 +1,7 @@
 from io import StringIO
-import ais.utils
+import asymmetric_immiscibility_simulations.utils as utils
 import numpy as np
 import pytest
-
-
-def test_chain_parse_single_valence(EK_paramfile):
-    seqfile = StringIO('EKEKEKEK')
-    result = chain_parse(seqfile, 1, EK_paramfile)
-    assert len(result) == 5
-    assert result[0] == [0, 1] * 4
-    assert result[1] == pytest.approx([0, 1] * 4)
 
 
 @pytest.fixture
@@ -18,7 +10,7 @@ def EK_paramfile():
         '#AA     Mass    Charge  Sigma   Lambda PROLINE MODDED\n'
         'GLU     129.10  -1.00   5.920   0.459\n'
         'LYS     128.20  1.00    6.360   0.514\n'
-        '#another comment\n'
+        'STR     128.20  0.00    12.000   0.000\n'
     )
 
 
@@ -31,9 +23,28 @@ def small_paramfile():
         '#another comment\n'
     )
 
+def test_chain_parse_single_valence(EK_paramfile):
+    seqfile = StringIO('EKEKEKEK')
+    result = utils.chain_parse(seqfile, 1, EK_paramfile)
+    assert len(result) == 5
+    assert result[0] == [0, 1] * 4
+    assert result[1] == pytest.approx([129.10, 128.20] * 4)
+    assert result[2] == pytest.approx([-1, 1] * 4)
+    assert result[3] == ['GLU', 'LYS', 'STR']
+
+def test_chain_parse_triple_valence(EK_paramfile):
+    seqfile = StringIO('EKEKEKEK')
+    result = utils.chain_parse(seqfile, 3, EK_paramfile)
+    assert len(result) == 5
+    assert result[0] == [2] + [0, 1] * 12
+    assert result[1] == pytest.approx([128.20] + [129.10, 128.20] * 12)
+    assert result[2] == pytest.approx([0] + [-1, 1] * 12)
+    assert result[3] == ['GLU', 'LYS', 'STR']
+
+
 def test_paramparse(small_paramfile):
 
-    result = paramparse(small_paramfile)
+    result = utils.paramparse(small_paramfile)
     assert len(result) == 6
     assert result[0] == pytest.approx([71.08, 156.20])
     assert result[1] == pytest.approx([0, 1])
@@ -45,7 +56,7 @@ def test_paramparse(small_paramfile):
 
 
 def test_get_param_dict(small_paramfile):
-    result = get_param_dict(small_paramfile)
+    result = utils.get_param_dict(small_paramfile)
     _param_matches_smallfile(result)
 
 
