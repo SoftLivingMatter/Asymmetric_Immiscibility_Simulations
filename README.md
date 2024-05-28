@@ -23,6 +23,21 @@ the plugin [azplugins](https://github.com/mphowardlab/azplugins/) to perform
 direct coexistence NPAT simulations for estimating the relative miscibility of
 model disordered proteins with oligomerization effects. 
 
+## Installation
+
+Dependencies require conda installation into a separate environment:
+```bash
+conda create -c conda-forge -n ais hoomd=2.9.7
+conda activate ais
+# within the Asymmetric_Immiscibility_Simulations directory
+git clone --depth 1 --branch v0.12.0 https://github.com/mphowardlab/azplugins.git
+cd azplugins
+mkdir build && cd build
+cmake ..
+make install
+pip install .
+```
+
 ## Example Usage
 
 1. In folder InitialConfig, the script `GenInitConfig.py` creates an initial

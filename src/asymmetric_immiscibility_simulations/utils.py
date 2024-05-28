@@ -1,4 +1,39 @@
 import numpy as np
+# import pandas as pd
+
+# CODE_TO_NAME = pd.DataFrame([
+#     ('R', 'ARG'),
+#     ('H', 'HIS'),
+#     ('K', 'LYS'),
+#     ('D', 'ASP'),
+#     ('E', 'GLU'),
+#     ('S', 'SER'),
+#     ('T', 'THR'),
+#     ('N', 'ASN'),
+#     ('Q', 'GLN'),
+#     ('C', 'CYS'),
+#     ('U', 'SEC'),
+#     ('G', 'GLY'),
+#     ('P', 'PRO'),
+#     ('A', 'ALA'),
+#     ('V', 'VAL'),
+#     ('I', 'ILE'),
+#     ('L', 'LEU'),
+#     ('M', 'MET'),
+#     ('F', 'PHE'),
+#     ('Y', 'TYR'),
+#     ('W', 'TRP'),
+#     ('Z', 'STR'),
+# ],
+#                             columns=['aa', 'code'],
+#                             )
+#     params = pd.read_csv(
+#         paramfile,
+#         comment='#',
+#         sep=r'\s+',
+#         names=['code', 'mass', 'charge', 'radius', 'hps'],
+#     )
+#     return params.merge(CODE_TO_NAME, on='code').set_index('aa')
 
 def get_param_dict(paramfile='stats_module.dat'):
     aaparams = {}

@@ -6,10 +6,6 @@ from hoomd import azplugins
 import argparse
 
 
-parser = argparse.ArgumentParser(description='Performs a equilibration NVT run at input temerature')
-parser.add_argument('-T',dest='T',action='store',required=True,help='Temp')
-args = parser.parse_args()
-Temp = float(args.T)
 def get_param_dict():
     aaparams = {}
     with open('stats_module.dat','r') as f:
@@ -59,64 +55,75 @@ def chain_parse(seqfile):
         chain_charge.append(aacharge[index])
     return chain_id,chain_mass,chain_charge,aakeys,aaparams
 
-#Production run parameters
-equib_dt=0.01 # Time step for production run in picoseconds
-equib_steps=200000000 # Total number of steps
-equib_T=Temp # Temperature for production run in Kelvin
+def parse_args(args=None):
+    parser = argparse.ArgumentParser(description='Performs a equilibration NVT run at input temerature')
+    parser.add_argument('-T',dest='T',action='store',required=True,help='Temp')
+    return parser.parse_args(args)
 
-seqfile1 = 'ke1.dat'
-chain_id, chain_mass, chain_charge,aakeys,aaparams = chain_parse(seqfile1)
+def main(args):
+    Temp = float(args.T)
+
+#Production run parameters
+    equib_dt=0.01 # Time step for production run in picoseconds
+    equib_steps=200000000 # Total number of steps
+    equib_T=Temp # Temperature for production run in Kelvin
+
+    seqfile1 = 'ke1.dat'
+    chain_id, chain_mass, chain_charge,aakeys,aaparams = chain_parse(seqfile1)
 
 
 ##Create the snapshot ##
-bond_length=0.38
-chain_length=len(chain_id)
-box_length=bond_length*chain_length+10
+    bond_length=0.38
+    chain_length=len(chain_id)
+    box_length=bond_length*chain_length+10
 
 #################################################################################################
 # # An NVT run is performed to equilibrate the system using the output of SlabResize.py
 ################################################################################################
 
-hoomd.context.initialize("--notice-level=2")
-sim = hoomd.context.SimulationContext()
+    hoomd.context.initialize("--notice-level=2")
+    sim = hoomd.context.SimulationContext()
 
-system = hoomd.init.read_gsd('box2slab_extend_%3i.gsd'%(Temp)) #For new runs
+    system = hoomd.init.read_gsd('box2slab_extend_%3i.gsd'%(Temp)) #For new runs
 #system = hoomd.init.read_gsd('restart_tmp1_%3i.gsd'%(Temp),frame=-1) #For continuation
-n_steps = equib_steps # 1 microseconds
+    n_steps = equib_steps # 1 microseconds
 
-fileroot = 'Production'
-nl = hoomd.md.nlist.cell()
+    fileroot = 'Production'
+    nl = hoomd.md.nlist.cell()
 
 ## Bonds
-harmonic = hoomd.md.bond.harmonic()
-harmonic.bond_coeff.set('AA_bond', k=8360, r0=0.381)
-harmonic.bond_coeff.set('STR_bond',k=8368,r0=1.0)
+    harmonic = hoomd.md.bond.harmonic()
+    harmonic.bond_coeff.set('AA_bond', k=8360, r0=0.381)
+    harmonic.bond_coeff.set('STR_bond',k=8368,r0=1.0)
 ## Nonbonded
-nl.reset_exclusions(exclusions=['1-2', 'body'])
-nb = azplugins.pair.ashbaugh(r_cut=0, nlist=nl)
-for i in aakeys:
-    for j in aakeys:
-        nb.pair_coeff.set(i,j,lam=(aaparams[i][3]+aaparams[j][3])/2.,epsilon=0.8368, sigma=(aaparams[i][2]+aaparams[j][2])/10./2.,r_cut=2.0)
+    nl.reset_exclusions(exclusions=['1-2', 'body'])
+    nb = azplugins.pair.ashbaugh(r_cut=0, nlist=nl)
+    for i in aakeys:
+        for j in aakeys:
+            nb.pair_coeff.set(i,j,lam=(aaparams[i][3]+aaparams[j][3])/2.,epsilon=0.8368, sigma=(aaparams[i][2]+aaparams[j][2])/10./2.,r_cut=2.0)
 
 ## Electrostatics
-yukawa = hoomd.md.pair.yukawa(r_cut=0.0, nlist=nl)
-for i,atom1 in enumerate(aakeys):
-    for j,atom2 in enumerate(aakeys):
-        yukawa.pair_coeff.set(atom1,atom2,epsilon=aaparams[atom1][1]*aaparams[atom2][1]*1.73136, kappa=1.0, r_cut=3.5)
+    yukawa = hoomd.md.pair.yukawa(r_cut=0.0, nlist=nl)
+    for i,atom1 in enumerate(aakeys):
+        for j,atom2 in enumerate(aakeys):
+            yukawa.pair_coeff.set(atom1,atom2,epsilon=aaparams[atom1][1]*aaparams[atom2][1]*1.73136, kappa=1.0, r_cut=3.5)
 
 ## Group Particles
-all = hoomd.group.all()
+    all = hoomd.group.all()
 
 ## Set up integrator
-hoomd.md.integrate.mode_standard(dt=equib_dt) # Time units in ps
-temp = equib_T*0.00831446
-integrator = hoomd.md.integrate.langevin(group=all, kT=temp, seed=399991) # Temp is kT/0.00831446
-for cnt,i in enumerate(aakeys):
-    integrator.set_gamma(i,gamma=aaparams[i][0]/1000.0)
+    hoomd.md.integrate.mode_standard(dt=equib_dt) # Time units in ps
+    temp = equib_T*0.00831446
+    integrator = hoomd.md.integrate.langevin(group=all, kT=temp, seed=399991) # Temp is kT/0.00831446
+    for cnt,i in enumerate(aakeys):
+        integrator.set_gamma(i,gamma=aaparams[i][0]/1000.0)
 ## Outputs
-hoomd.analyze.log(filename=fileroot+'_%3i.log'%(Temp), quantities=['potential_energy', 'pressure_xx', 'pressure_yy', 'pressure_zz', 'temperature','lx','ly','lz'], period=100000, overwrite=False, header_prefix='#')
-hoomd.analyze.log(filename='stress_%3i.log'%(Temp), quantities=['pressure_xy', 'pressure_xz', 'pressure_yz'], period=100000, overwrite=False, header_prefix='#') # Output stress tensor
-hoomd.dump.gsd('restart_tmp1_%3i.gsd'%(Temp), period=100000, group=all)
+    hoomd.analyze.log(filename=fileroot+'_%3i.log'%(Temp), quantities=['potential_energy', 'pressure_xx', 'pressure_yy', 'pressure_zz', 'temperature','lx','ly','lz'], period=100000, overwrite=False, header_prefix='#')
+    hoomd.analyze.log(filename='stress_%3i.log'%(Temp), quantities=['pressure_xy', 'pressure_xz', 'pressure_yz'], period=100000, overwrite=False, header_prefix='#') # Output stress tensor
+    hoomd.dump.gsd('restart_tmp1_%3i.gsd'%(Temp), period=100000, group=all)
 ## Run simulation
-hoomd.run_upto(equib_steps, limit_hours=48)
+    hoomd.run_upto(equib_steps, limit_hours=48)
 ########################################################################################################
+
+if __name__ == "__main__":
+    main()
