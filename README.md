@@ -24,18 +24,57 @@ direct coexistence NPAT simulations for estimating the relative miscibility of
 model disordered proteins with oligomerization effects. 
 
 ## Installation
+Because the current dependencies are not able to be easily imported, we have to do a work around by building azplugins and hoomd locally, and then installing the simulation. 
 
-Dependencies require conda installation into a separate environment:
-```bash
-conda create -c conda-forge -n ais hoomd=2.9.7
+**In the MyDella terminal:**
+
+1. Create and load up the environment (recommend putting 1st and 3rd line in a shell script):
+```
+module load anaconda3/2022.5
+conda create --name ais python=3.9
 conda activate ais
-# within the Asymmetric_Immiscibility_Simulations directory
+```
+
+2. Within the Asymmetric_Immiscibility_Simulations directory:
+```
+pip install gsd==2.1.2
 git clone --depth 1 --branch v0.12.0 https://github.com/mphowardlab/azplugins.git
-cd azplugins
-mkdir build && cd build
+wget https://github.com/glotzerlab/hoomd-blue/releases/download/v2.9.7/hoomd-v2.9.7.tar.gz
+rm hoomd-v2.9.7.tar.gz
+cd azplugins/azplugins
+pwd
+```
+
+3. Copy the file path and paste here:
+```
+cd ../../hoomd-v2.9.7/hoomd
+ln -s "Paste-file-path-here" azplugins
+mkdir ../build && cd ../build
 cmake ..
-make install
-pip install .
+pwd #copy this file path
+vi cmake_install.cmake 
+```
+
+4. Edit vim file to give the CMAKE_INSTALL_PATH with the file path of your build directory you just created and copied from step 3:
+```
+if(NOT DEFINED CMAKE_INSTALL_PREFIX)
+  set(CMAKE_INSTALL_PREFIX "/usr/local")
+  set(CMAKE_INSTALL_PREFIX "Paste-file-path-here")
+endif()
+```
+
+5. Exit Vim and execute
+```
+make install #expect this to take some time. Watch out for any errors you might see. 
+```
+Once that is done, check if import hoomd and azplugins works (in python)-
+```
+import hoomd
+from hoomd import azplugins
+```
+Exit python, switch to the code-refactoring branch, and install the simulation software
+```
+pip install -e .[test]
 ```
 
 ## Example Usage
