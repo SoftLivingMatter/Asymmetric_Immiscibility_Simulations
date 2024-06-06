@@ -10,10 +10,14 @@ import hoomd
 from hoomd import azplugins
 parser = argparse.ArgumentParser(description='Performs a resizing run at input temperature')
 parser.add_argument('-T',dest='T',action='store',required=True,help='Temp')
+parser.add_argument('--resize_dt', dest='resize_dt', action='store', required=True, type=float, help='Time step for production run in picoseconds')
+parser.add_argument('--resize_steps', dest='resize_steps', action='store', required=True, type=int, help='Total number of steps')
 args = parser.parse_args()
 
 ## Parameters ##
 Temp = float(args.T)
+resize_dt = args.resize_dt
+resize_steps = args.resize_steps
 nstar = 147
 Narm = 3
 Nchain2 = 441
@@ -66,12 +70,9 @@ def chain_parse(seqfile):
         chain_charge.append(aacharge[index])
     return chain_id,chain_mass,chain_charge,aakeys,aaparams
 
+resize_T = Temp
 
 #Resizing run parameters
-resize_dt=0.01 # Time step for production run in picoseconds
-resize_steps=500000 # Total number of steps
-resize_T=Temp # Temperature for production run in Kelvin
-
 seqfile1 = 'ke1.dat'
 chain_id1, chain_mass1, chain_charge1,aakeys,aaparams = chain_parse(seqfile1)
 
