@@ -28,54 +28,37 @@ Because the current dependencies are not able to be easily imported, we have to 
 
 **In the MyDella terminal:**
 
-1. Create and load up the environment (recommend putting 1st and 3rd line in a shell script):
+1. Create and load the environment (recommend putting 1st and 3rd line in a shell script):
 ```
 module load anaconda3/2022.5
 conda create --name ais python=3.9
 conda activate ais
 ```
 
-2. Within the Asymmetric_Immiscibility_Simulations directory:
+2. Within the Asymmetric_Immiscibility_Simulations directory, install the necessary dependencies:
 ```
 pip install gsd==2.1.2
-git clone --depth 1 --branch v0.12.0 https://github.com/mphowardlab/azplugins.git
+wget https://github.com/mphowardlab/azplugins/archive/refs/tags/v0.12.0.tar.gz -O azplugins-v0.12.0.tar.gz
+tar -xzvf azplugins-v0.12.0.tar.gz
 wget https://github.com/glotzerlab/hoomd-blue/releases/download/v2.9.7/hoomd-v2.9.7.tar.gz
-rm hoomd-v2.9.7.tar.gz
-cd azplugins/azplugins
-pwd
-```
+tar -xvzf hoomd-v2.9.7.tar.gz
+rm azplugins-v0.12.0.tar.gz hoomd-v2.9.7.tar.gz 
 
-3. Copy the file path and paste here:
-```
-cd ../../hoomd-v2.9.7/hoomd
-ln -s "Paste-file-path-here" azplugins
+cd hoomd-v2.9.7/hoomd
+ln -s ../../azplugins-0.12.0/azplugins azplugins 
 mkdir ../build && cd ../build
-cmake ..
-pwd #copy this file path
-vi cmake_install.cmake 
+cmake -DCMAKE_INSTALL_PREFIX=$(pwd) ..
 ```
 
-4. Edit vim file to give the CMAKE_INSTALL_PATH with the file path of your build directory you just created and copied from step 3:
+3. Execute
 ```
-if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/usr/local")
-  set(CMAKE_INSTALL_PREFIX "Paste-file-path-here")
-endif()
+make install #expect this to take some time but recommend using more cores on mydella. 
 ```
-
-5. Exit Vim and execute
+Once that is finished, install the simulation software if import hoomd and azplugins work -
 ```
-make install #expect this to take some time. Watch out for any errors you might see. 
+python -c 'import hoomd ; from hoomd import azplugins'
 ```
-Once that is done, check if import hoomd and azplugins works (in python)-
-```
-import hoomd
-from hoomd import azplugins
-```
-Exit python, switch to the code-refactoring branch, and install the simulation software
-```
-pip install -e .[test]
-```
+If you are a software developer or want to run the unit tests, run `pip install -e ".[test]"` in zsh.
 
 ## Example Usage
 
