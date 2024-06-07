@@ -54,7 +54,7 @@ cmake -DCMAKE_INSTALL_PREFIX=$(pwd) ..
 ```
 make install #expect this to take some time but recommend using more cores on mydella. 
 ```
-Once that is finished, install the simulation software if import hoomd and azplugins work -
+Once that is finished, check if import hoomd and azplugins work -
 ```
 python -c 'import hoomd ; from hoomd import azplugins'
 ```
