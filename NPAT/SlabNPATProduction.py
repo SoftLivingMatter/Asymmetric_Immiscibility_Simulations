@@ -81,7 +81,7 @@ box_length=bond_length*chain_length+10
 
 hoomd.context.initialize("--notice-level=2")
 sim = hoomd.context.SimulationContext()
-system = hoomd.init.read_gsd('restart_tmp1_%3i.gsd'%(Temp),frame=-1)
+system = hoomd.init.read_gsd('../NVT/restart_tmp1_%3i.gsd'%(Temp),frame=-1)
 
 n_steps = production_steps # 1 microseconds
 
