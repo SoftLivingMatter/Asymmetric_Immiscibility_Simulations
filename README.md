@@ -48,7 +48,7 @@ cd hoomd-v2.9.7/hoomd
 ln -s ../../azplugins-0.12.0/azplugins azplugins 
 mkdir ../build && cd ../build
 mkdir temp
-cmake -DCMAKE_INSTALL_PREFIX=$(pwd/temp) ..
+cmake -DCMAKE_INSTALL_PREFIX=$(pwd)/temp ..
 ```
 
 3. Execute
