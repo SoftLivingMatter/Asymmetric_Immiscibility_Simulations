@@ -47,7 +47,8 @@ rm azplugins-v0.12.0.tar.gz hoomd-v2.9.7.tar.gz
 cd hoomd-v2.9.7/hoomd
 ln -s ../../azplugins-0.12.0/azplugins azplugins 
 mkdir ../build && cd ../build
-cmake -DCMAKE_INSTALL_PREFIX=$(pwd) ..
+mkdir temp
+cmake -DCMAKE_INSTALL_PREFIX=$(pwd/temp) ..
 ```
 
 3. Execute
@@ -57,6 +58,10 @@ make install #expect this to take some time but recommend using more cores on my
 Once that is finished, check if import hoomd and azplugins work -
 ```
 python -c 'import hoomd ; from hoomd import azplugins'
+```
+To access hoomd from any directory, add build path to build directory of hoomd to default PYTHONPATH. 
+```
+export PYTHONPATH=:$(pwd)
 ```
 If you are a software developer or want to run the unit tests, run `pip install -e ".[test]"` in zsh.
 
