@@ -24,19 +24,46 @@ direct coexistence NPAT simulations for estimating the relative miscibility of
 model disordered proteins with oligomerization effects. 
 
 ## Installation
+Because the current dependencies are not available on pypi or conda, we have to
+build azplugins and hoomd from source before installing this package. 
 
-Dependencies require conda installation into a separate environment:
+**In the MyDella terminal:**
+
+1. Create and load the environment (recommend putting 1st and 3rd line in a shell script):
 ```bash
-conda create -c conda-forge -n ais hoomd=2.9.7
+module load anaconda3/2022.5
+conda create --name ais python=3.9
 conda activate ais
-# within the Asymmetric_Immiscibility_Simulations directory
-git clone --depth 1 --branch v0.12.0 https://github.com/mphowardlab/azplugins.git
-cd azplugins
-mkdir build && cd build
-cmake ..
-make install
-pip install .
 ```
+
+2. Within the Asymmetric_Immiscibility_Simulations directory, install
+the necessary dependencies.  Installing this package provides the dependencies
+to build hoomd, which is necessary for azplugins
+```bash
+pip install gsd==2.1.2
+pip install -e .  # install ".[test]" for development dependencies
+
+# in any directory
+wget https://github.com/mphowardlab/azplugins/archive/refs/tags/v0.12.0.tar.gz -O azplugins-v0.12.0.tar.gz
+tar -xzf azplugins-v0.12.0.tar.gz
+wget https://github.com/glotzerlab/hoomd-blue/releases/download/v2.9.7/hoomd-v2.9.7.tar.gz
+tar -xzf hoomd-v2.9.7.tar.gz
+rm azplugins-v0.12.0.tar.gz hoomd-v2.9.7.tar.gz 
+
+cd hoomd-v2.9.7/hoomd
+ln -sr ../../azplugins-0.12.0/azplugins azplugins 
+mkdir ../build && cd ../build
+cmake ../ -DCMAKE_INSTALL_PREFIX=`python3 -c "import site; print(site.getsitepackages()[0])"`
+
+make install -j4  # or more cores
+```
+
+3. Test
+Once building finishes, check if import hoomd and azplugins work -
+```bash
+python -c 'import hoomd ; from hoomd import azplugins'
+```
+The above should produce no output any directory if hoomd is installed correctly.
 
 ## Example Usage
 
